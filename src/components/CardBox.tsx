@@ -8,6 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useState, useRef } from "react";
 
 //props for the CardBox component
 type Props = {
@@ -23,20 +24,33 @@ Includes left/right navigation arrows and pagination dots.*/
 export default function CardBox({ cards, game, CardBoxText }: Props) {
   // Initialize the router for navigation to the CardInfo page when a card is pressed. Game and card ID are passed as parameters.
   const router = useRouter();
+  const carouselTrack = useRef<ScrollView>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const showSlide = (index: number) => {
+    const prevIndex = currentIndex;
+    const newIndex = ((index % cards.length) + cards.length) % cards.length;
+    setCurrentIndex(newIndex);
+    if (carouselTrack.current) {
+      carouselTrack.current.scrollTo({ x: newIndex * 115, animated: true });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{CardBoxText}</Text>
       <View style={styles.imageCarousel}>
-        <View style={styles.arrowButton}>
+        <Pressable id="prev-arrow" onPress={() => showSlide(currentIndex - 1)} style={styles.arrowButton}>
           <Text style={styles.arrow}>‹</Text>
-        </View>
+        </Pressable>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
+          id="carousel-track"
+          ref={carouselTrack}
           style={styles.scrollView}
         >
           {/* Mapping through the cards array to render each card as a pressable image. When pressed, navigates to the CardInfo page with the game and card ID as parameters. */}
-          <View style={styles.imageRow}>
+          <View id="carousel-slide" style={styles.imageRow}>
             {cards.map((card) => (
               <Pressable
                 key={card.id}
@@ -52,12 +66,12 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
             ))}
           </View>
         </ScrollView>
-        <View style={styles.arrowButton}>
+        <Pressable id="next-arrow" onPress={() => showSlide(currentIndex + 1)} style={styles.arrowButton}>
           <Text style={styles.arrow}>›</Text>
-        </View>
-        <View style={styles.dots}>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <View key={index} style={styles.dot} />
+        </Pressable>
+        <View id="carousel-dots" style={styles.dots}>
+          {Array.from({ length: cards.length }).map((_, index) => (
+            <View key={index} style={[styles.dot, currentIndex === index && styles.activeDot]} />
           ))}
         </View>
       </View>
@@ -67,6 +81,9 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
 
 // Styles for the CardBox component
 const styles = StyleSheet.create({
+  activeDot: {
+    backgroundColor: "#000",
+  },
   container: {
     width: "90%",
     alignSelf: "center",
