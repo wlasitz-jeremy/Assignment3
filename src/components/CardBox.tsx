@@ -98,9 +98,13 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
           <Ionicons name="chevron-forward" style={styles.arrow}/>
         </Pressable>
         <View id="carousel-dots" style={styles.dots}>
-          {Array.from({ length: cards.length }).map((_, index) => (
-            <View key={index} style={[styles.dot, currentIndex === index && styles.activeDot]} />
-          ))}
+          {Array.from({ length: Math.min(28, cards.length), }).map((_, index) => { 
+            const maxDots = Math.min(28, cards.length);
+            const startIndex = Math.max(0, Math.min(currentIndex - Math.floor(maxDots / 2), cards.length - maxDots)); 
+            const dotIndex = startIndex + index; 
+          return (
+            <View key={index} style={[styles.dot, currentIndex === dotIndex && styles.activeDot]} />
+          )})}
         </View>
       </View>
     </View>
