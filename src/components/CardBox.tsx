@@ -6,6 +6,8 @@ import {
   View,
   ScrollView,
   Pressable,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useRef } from "react";
@@ -28,14 +30,35 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
 
   // Reference to the ScrollView containing the carousel slides. Used to programmatically scroll to a specific card when navigating through the cardBox.
   const carouselTrack = useRef<ScrollView>(null);
+  // Reference to the ScrollView containing the carousel slides. Used to programmatically scroll to a specific card when navigating through the cardBox.
   const [currentIndex, setCurrentIndex] = useState(0);
   // State to keep track of the currently visible card index in the carousel. This is updated whenever the user navigates through the cards using the arrows or by scrolling manually.
   const showSlide = (index: number) => {
+    // Calculate the new index, ensuring it wraps around correctly if it goes out of bounds.
     const newIndex = ((index % cards.length) + cards.length) % cards.length;
+    // Update the currentIndex state and scroll the carousel to the new index.
     setCurrentIndex(newIndex);
+    // Scroll the carousel to the new index if the reference to the ScrollView is available.
     if (carouselTrack.current) {
+      // Scroll the carousel to the calculated position based on the new index.
       carouselTrack.current.scrollTo({ x: newIndex * 115, animated: true });
     }
+  };
+  // Handler for the scroll event of the carousel. Updates the currentIndex state based on the horizontal scroll position.
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    // Extract the horizontal scroll offset from the event. This represents how far the user has scrolled horizontally within the carousel.
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const cardWidth = 115;
+    // Extract the visible width of the carousel and the total content width to determine if the user has scrolled to the end.
+    const visableWidth = event.nativeEvent.layoutMeasurement.width;
+    // Determine if the user has scrolled to the end of the carousel.
+    const contentWidth = event.nativeEvent.contentSize.width;
+    // Calculate the new index based on whether the user is at the end or not.
+    const isAtEnd = offsetX + visableWidth >= contentWidth - 5;
+    // Ensure the new index is within the valid range of card indices.
+    const newIndex = isAtEnd ? cards.length - 1 : Math.round(offsetX / cardWidth);
+    // Update the currentIndex state with the new index, ensuring it is not less than 0.
+    setCurrentIndex(Math.max(0, newIndex));
   };
 
   return (
@@ -51,6 +74,8 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
           id="carousel-track"
           ref={carouselTrack}
           style={styles.scrollView}
+          onMomentumScrollEnd={handleScroll}
+          scrollEventThrottle={16}
         >
           {/* Mapping through the cards array to render each card as a pressable image. When pressed, navigates to the CardInfo page with the game and card ID as parameters. */}
           <View id="carousel-slide" style={styles.imageRow}>
