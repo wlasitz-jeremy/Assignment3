@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useRef } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 //props for the CardBox component
 type Props = {
@@ -41,8 +42,8 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
     <View style={styles.container}>
       <Text style={styles.text}>{CardBoxText}</Text>
       <View style={styles.imageCarousel}>
-        <Pressable id="prev-arrow" onPress={() => showSlide(currentIndex - 1)} style={styles.arrowButton}>
-          <Text style={styles.arrow}>‹</Text>
+        <Pressable id="prev-arrow" onPress={() => showSlide(currentIndex - 1)}>
+          <Ionicons name="chevron-back" style={styles.arrow}/>
         </Pressable>
         <ScrollView
           horizontal={true}
@@ -68,8 +69,8 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
             ))}
           </View>
         </ScrollView>
-        <Pressable id="next-arrow" onPress={() => showSlide(currentIndex + 1)} style={styles.arrowButton}>
-          <Text style={styles.arrow}>›</Text>
+        <Pressable id="next-arrow" onPress={() => showSlide(currentIndex + 1)}>
+          <Ionicons name="chevron-forward" style={styles.arrow}/>
         </Pressable>
         <View id="carousel-dots" style={styles.dots}>
           {Array.from({ length: cards.length }).map((_, index) => (
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   scrollView: {
-    flexDirection: "row",
+    flex: 1,
   },
   //images
   cardImage: {
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 8,
+    // paddingRight: 8,
     paddingBottom: 25,
     backgroundColor: "#e4e2f4",
     borderWidth: 1,
@@ -144,17 +145,12 @@ const styles = StyleSheet.create({
   },
 
   // nav arrows
-  arrowButton: {
-    width: 25,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
+  arrow: {
+    fontSize: 48,
+    color: "grey",
+    zIndex: 1,
   },
 
-  arrow: {
-    fontSize: 32,
-    color: "#111111",
-  },
   // dots
   dots: {
     position: "absolute",
