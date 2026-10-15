@@ -24,10 +24,12 @@ Includes left/right navigation arrows and pagination dots.*/
 export default function CardBox({ cards, game, CardBoxText }: Props) {
   // Initialize the router for navigation to the CardInfo page when a card is pressed. Game and card ID are passed as parameters.
   const router = useRouter();
+
+  // Reference to the ScrollView containing the carousel slides. Used to programmatically scroll to a specific card when navigating through the cardBox.
   const carouselTrack = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  // State to keep track of the currently visible card index in the carousel. This is updated whenever the user navigates through the cards using the arrows or by scrolling manually.
   const showSlide = (index: number) => {
-    const prevIndex = currentIndex;
     const newIndex = ((index % cards.length) + cards.length) % cards.length;
     setCurrentIndex(newIndex);
     if (carouselTrack.current) {
