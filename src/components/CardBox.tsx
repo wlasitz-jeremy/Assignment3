@@ -27,7 +27,8 @@ Includes left/right navigation arrows and pagination dots.*/
 export default function CardBox({ cards, game, CardBoxText }: Props) {
   // Initialize the router for navigation to the CardInfo page when a card is pressed. Game and card ID are passed as parameters.
   const router = useRouter();
-
+  // Calculate the total width of a card including its margin. This is used to determine the scroll position when navigating through the carousel.
+  const cardWidth = styles.cardImage.width + styles.cardImage.marginRight;
   // Reference to the ScrollView containing the carousel slides. Used to programmatically scroll to a specific card when navigating through the cardBox.
   const carouselTrack = useRef<ScrollView>(null);
   // Reference to the ScrollView containing the carousel slides. Used to programmatically scroll to a specific card when navigating through the cardBox.
@@ -41,14 +42,13 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
     // Scroll the carousel to the new index if the reference to the ScrollView is available.
     if (carouselTrack.current) {
       // Scroll the carousel to the calculated position based on the new index.
-      carouselTrack.current.scrollTo({ x: newIndex * 115, animated: true });
+      carouselTrack.current.scrollTo({ x: newIndex * cardWidth, animated: true });
     }
   };
   // Handler for the scroll event of the carousel. Updates the currentIndex state based on the horizontal scroll position.
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     // Extract the horizontal scroll offset from the event. This represents how far the user has scrolled horizontally within the carousel.
     const offsetX = event.nativeEvent.contentOffset.x;
-    const cardWidth = 115;
     // Extract the visible width of the carousel and the total content width to determine if the user has scrolled to the end.
     const visableWidth = event.nativeEvent.layoutMeasurement.width;
     // Determine if the user has scrolled to the end of the carousel.
