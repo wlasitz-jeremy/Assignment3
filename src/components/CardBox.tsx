@@ -8,6 +8,8 @@ import {
   Pressable,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  Animated,
+  Dimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useRef } from "react";
@@ -27,6 +29,43 @@ Includes left/right navigation arrows and pagination dots.*/
 export default function CardBox({ cards, game, CardBoxText }: Props) {
   // Initialize the router for navigation to the CardInfo page when a card is pressed. Game and card ID are passed as parameters.
   const router = useRouter();
+
+  
+    // Animations for the pagination dots when they are pressed in and out. The dot scales up and its opacity changes on press.
+    const dotAnimation = useRef(new Animated.Value(1)).current;
+    const opacityAnimation = useRef(new Animated.Value(1)).current;
+    // Handlers for when a pagination dot is pressed in and out. These trigger the animations defined above.
+    const handleDotIn = () => {
+      // Trigger the animation for pressing in the dot.
+      Animated.spring(dotAnimation, {
+        toValue: 1.2,
+        useNativeDriver: true,
+        friction: 3,
+      }).start();
+      // Trigger the animation for changing the opacity of the dot.
+      Animated.timing(opacityAnimation, {
+        toValue: 0.5,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+    // Handler for when a pagination dot is released. This triggers the animations to revert the dot to its original state.
+    const handleDotOut = () => {
+      // Trigger the animation for releasing the dot.
+      Animated.spring(dotAnimation, {
+        toValue: 1,
+        useNativeDriver: true,
+        friction: 3,
+      }).start();
+      // Trigger the animation for changing the opacity of the dot back to its original state.
+      Animated.timing(opacityAnimation, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+
   // Calculate the total width of a card including its margin. This is used to determine the scroll position when navigating through the carousel.
   const cardWidth = styles.cardImage.width + styles.cardImage.marginRight;
   // Reference to the ScrollView containing the carousel slides. Used to programmatically scroll to a specific card when navigating through the cardBox.
@@ -45,6 +84,8 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
       carouselTrack.current.scrollTo({ x: newIndex * cardWidth, animated: true });
     }
   };
+
+
   // Handler for the scroll event of the carousel. Updates the currentIndex state based on the horizontal scroll position.
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     // Extract the horizontal scroll offset from the event. This represents how far the user has scrolled horizontally within the carousel.
@@ -60,6 +101,7 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
     // Update the currentIndex state with the new index, ensuring it is not less than 0.
     setCurrentIndex(Math.max(0, newIndex));
   };
+
 
   return (
     <View style={styles.container}>
