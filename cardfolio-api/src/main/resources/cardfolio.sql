@@ -78,6 +78,54 @@ CREATE TABLE cards (
         REFERENCES games(game_id)
 );
 
+-- 
+CREATE TABLE card_catalog (
+    card_id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INT NOT NULL,
+    external_id VARCHAR(100) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    set_code VARCHAR(25),
+    set_name VARCHAR(255),
+    collector_number VARCHAR(50),
+    rarity VARCHAR(50),
+    image_url VARCHAR(500),
+    thumbnail_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (game_id)
+        REFERENCES games(game_id),
+
+    UNIQUE(game_id, external_id)
+);
+
+-- 
+CREATE TABLE user_cards (
+    user_card_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    card_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    card_condition ENUM(
+        'Mint',
+        'Near Mint',
+        'Lightly Played',
+        'Moderately Played',
+        'Heavily Played',
+        'Damaged'
+    ),
+    purchase_price DECIMAL(10,2),
+    acquired_date DATE,
+
+    FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (card_id)
+        REFERENCES card_catalog(card_id)
+        ON DELETE CASCADE,
+
+    UNIQUE(user_id, card_id)
+);
+
 -- Creates the Magic specific table with specific attributes with all the respective constraints referencing the same card data in the card table
 CREATE TABLE mtg_cards (
     card_id INT PRIMARY KEY,
