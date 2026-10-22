@@ -1,7 +1,10 @@
 import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 
 // Component for the welcome screen
 export default function Welcome() {
+    // Initialize the router for navigation
+    const router = useRouter();
     return (
         // Main container for the welcome screen
         <View style={styles.container}>
@@ -12,13 +15,13 @@ export default function Welcome() {
                 </Text>    
             </View>
             {/* Log In button */}
-            <Pressable onPress={() => console.log('Log In pressed')}>
+            <Pressable onPress={() => router.replace('/login')}>
                 <View style={styles.loginButton}>
                     <Button title="Log In"></Button>
                 </View>
             </Pressable>
             {/* Sign Up button */}
-            <Pressable onPress={() => console.log('Sign Up pressed')}>
+            <Pressable onPress={() => router.replace('/signup')}>
                 <View style={styles.signupButton}>
                     <Button title="Sign Up"></Button>
                 </View>
@@ -31,8 +34,9 @@ export default function Welcome() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
+        marginVertical: 100,
     },
     header: {
         backgroundColor: '#f0f0f0',
@@ -40,13 +44,18 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     title: {
-        fontSize: 24,
+        fontSize: 48,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
     loginButton: {
         marginTop: 20,
+        borderRadius: 5,
+        color: '#4a475c',
     },
     signupButton: {
         marginTop: 10,
+        borderRadius: 5,
+        color: '#e2e1f4',
     },
 });
