@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
 // Component for the welcome screen
@@ -15,15 +15,15 @@ export default function Welcome() {
                 </Text>    
             </View>
             {/* Log In button */}
-            <Pressable onPress={() => router.replace('/login')}>
+            <Pressable onPress={() => router.replace('/')}>
                 <View style={styles.loginButton}>
-                    <Button title="Log In"></Button>
+                    <Text style={styles.loginButtonText}>Log In</Text>
                 </View>
             </Pressable>
             {/* Sign Up button */}
-            <Pressable onPress={() => router.replace('/signup')}>
+            <Pressable onPress={() => router.replace('/')}>
                 <View style={styles.signupButton}>
-                    <Button title="Sign Up"></Button>
+                    <Text style={styles.signupButtonText}>Sign Up</Text>
                 </View>
             </Pressable>
         </View>
@@ -34,7 +34,7 @@ export default function Welcome() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginVertical: 100,
     },
@@ -48,14 +48,34 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
+    loginButtonText: {
+        color: '#ffffff',
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
     loginButton: {
+        height: 80,
+        width: 280,
+        alignItems: 'center',
+        justifyContent: 'center',
         marginTop: 20,
-        borderRadius: 5,
+        borderRadius: 10,
+        backgroundColor: '#4a475c',
+        borderWidth: 1,
+    },
+    signupButtonText: {
         color: '#4a475c',
+        fontSize: 24,
+        fontWeight: 'bold',
     },
     signupButton: {
-        marginTop: 10,
-        borderRadius: 5,
-        color: '#e2e1f4',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        borderRadius: 10,
+        backgroundColor: '#e2e1f4',
+        borderWidth: 1,
+        height: 80,
+        width: 280,
     },
 });
