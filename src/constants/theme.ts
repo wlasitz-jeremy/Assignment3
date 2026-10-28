@@ -178,6 +178,64 @@ export const layout = {
   iconButton: 60,
 } as const;
 
+/** Frequent Figma text combinations, named by their intended use in the app. */
+export const textStyles = {
+  welcomeHeading: {
+    fontFamily: fontFamilies.oswald,
+    fontSize: 48,
+    fontWeight: fontWeights.bold,
+    letterSpacing: 0.96,
+    color: colors.light.textPrimary,
+  },
+  pageHeading: {
+    fontFamily: fontFamilies.oswald,
+    fontSize: 46,
+    fontWeight: fontWeights.bold,
+    letterSpacing: 0.92,
+    color: colors.light.textPrimary,
+  },
+  accountWordmark: {
+    fontFamily: fontFamilies.oswald,
+    fontSize: 64,
+    fontWeight: fontWeights.bold,
+    letterSpacing: 1.28,
+    color: colors.light.textPrimary,
+  },
+  formLabel: {
+    fontFamily: fontFamilies.oswald,
+    fontSize: 24,
+    fontWeight: fontWeights.bold,
+    letterSpacing: 0.48,
+    color: colors.light.textPrimary,
+  },
+  primaryButtonLabel: {
+    fontFamily: fontFamilies.oswald,
+    fontSize: 32,
+    fontWeight: fontWeights.bold,
+    letterSpacing: 0.64,
+  },
+  navigationLabel: {
+    fontFamily: fontFamilies.souliyoUnicode,
+    fontSize: 16,
+    fontWeight: fontWeights.regular,
+    letterSpacing: 0.32,
+  },
+  body: {
+    fontFamily: fontFamilies.souliyoUnicode,
+    fontSize: 14,
+    fontWeight: fontWeights.regular,
+    letterSpacing: 0.28,
+    color: colors.light.textPrimary,
+  },
+  caption: {
+    fontFamily: fontFamilies.souliyoUnicode,
+    fontSize: 12,
+    fontWeight: fontWeights.regular,
+    letterSpacing: 0.24,
+    color: colors.light.textSecondary,
+  },
+} as const;
+
 /** Combined export for consumers that prefer one theme object. */
 export const theme = {
   colors,
@@ -189,6 +247,7 @@ export const theme = {
   borderWidths,
   shadows,
   layout,
+  textStyles,
 } as const;
 
 export type Theme = typeof theme;
