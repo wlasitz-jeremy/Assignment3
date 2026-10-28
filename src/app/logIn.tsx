@@ -2,12 +2,14 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
-import { Form } from 'react-hook-form';
+import { Checkbox } from 'expo-checkbox';
+import { useState } from 'react';
 
 // Component for the LogIn screen
 export default function LogIn() {
     // Initialize the router for navigation
     const router = useRouter();
+    const [checkedRememberMe, setCheckedRememberMe] = useState(false);
     return (
         // Main container for the welcome screen
         <View style={styles.container}>
@@ -16,12 +18,29 @@ export default function LogIn() {
                 <AccountForm AccountFormText="Email or Username" />
                 <AccountForm AccountFormText="Password" />
             </View>
-            {/* Log In button */}
-            <Pressable onPress={() => router.replace('/')}>
-                <View style={styles.loginButton}>
-                    <Text style={styles.loginButtonText}>LOGIN</Text>
+            <View>
+                <View style={styles.checkBoxRow}>
+                    <View style={styles.rememberMeTermsConditionsForgotPassword}>
+                        <Checkbox color="black" style={{borderRadius: 5}} value={checkedRememberMe} onValueChange={setCheckedRememberMe}/>
+                        <Text>Remember Me</Text>
+                    </View>
+                    <View style={styles.rememberMeTermsConditionsForgotPassword}>
+                        <Text>Forgot Password?</Text>
+                    </View>
                 </View>
-            </Pressable>
+                {/* Log In button */}
+                <Pressable onPress={() => router.replace('/')}>
+                    <View style={styles.loginButton}>
+                        <Text style={styles.loginButtonText}>LOGIN</Text>
+                    </View>
+                </Pressable>
+                <Pressable onPress={() => router.replace('/signUp')}>
+                    <View style={styles.signUp}>
+                        <Text style={{color: "black", fontWeight: "bold", fontSize: 14}}>Don't have an account?</Text>
+                        <Text style={{color: "grey", fontWeight: "bold", fontSize: 14}}>Sign Up</Text>
+                    </View>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -53,14 +72,31 @@ const styles = StyleSheet.create({
         width: 280,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20,
         borderRadius: 10,
         backgroundColor: '#4a475c',
         borderWidth: 1,
-        marginBottom: 100,
     },
     forms: {
         width: '100%',
         gap: 25,
+    },
+    signUp: {
+        flexDirection: "row",
+        gap: 5,
+        justifyContent: "center",
+        marginBottom: 78,
+        marginTop: 5,
+    },
+    checkBoxRow: {
+        flexDirection: "row",
+        width: 280,
+        justifyContent: "space-between",
+        marginTop: 20,
+        marginBottom: 5,
+    },
+    rememberMeTermsConditionsForgotPassword: {
+        flexDirection: "row",
+        gap: 2,
+        alignItems: "center",
     },
 });
