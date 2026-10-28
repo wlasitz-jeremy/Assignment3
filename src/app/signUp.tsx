@@ -29,7 +29,7 @@ export default function SignUp() {
                     mode="date"
                     display="compact"
                     maximumDate={new Date()}
-                    onChange={(event, selectedDate) => {
+                    onValueChange={(event, selectedDate) => {
                         if (selectedDate) {
                             setDateOfBirth(selectedDate);
                         }
