@@ -4,18 +4,23 @@ import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
 import { Checkbox } from 'expo-checkbox';
 import { useState } from 'react';
+import { useUser } from "../app/context/UserContext";
 
 // Component for the LogIn screen
 export default function LogIn() {
     // Initialize the router for navigation
     const router = useRouter();
     const [checkedRememberMe, setCheckedRememberMe] = useState(false);
+    const { accountUserName, setAccountUserName } = useUser() as unknown as {
+        accountUserName: string;
+        setAccountUserName: (value: string) => void;
+    };
     return (
         // Main container for the welcome screen
         <View style={styles.container}>
             <AccountHeader AccountHeaderText="Cardfolio"></AccountHeader>
             <View style={styles.forms}>
-                <AccountForm AccountFormText="Email or Username" />
+                <AccountForm AccountFormText="Username" AccountInformation={accountUserName} onChangeText={setAccountUserName}/>
                 <AccountForm AccountFormText="Password" />
             </View>
             <View>

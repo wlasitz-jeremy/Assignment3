@@ -2,9 +2,11 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 
 type Props = {
   AccountFormText: string;
+  AccountInformation?: string;
+  onChangeText?: (text: string) => void;
 };
 
-export default function AccountForm({ AccountFormText }: Props) {
+export default function AccountForm({ AccountFormText, AccountInformation, onChangeText }: Props) {
   return (
     <View style={styles.formContainer}>
       <Text style={styles.formTitle}>{AccountFormText}</Text>
@@ -13,6 +15,8 @@ export default function AccountForm({ AccountFormText }: Props) {
           accessibilityLabel={AccountFormText}
           placeholder={`Enter ${AccountFormText}`}
           style={styles.textInput}
+          value={AccountInformation}
+          onChangeText={onChangeText}
         />
       </View>
     </View>

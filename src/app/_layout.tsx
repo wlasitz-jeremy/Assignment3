@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UserProvider } from "./context/UserContext";
 
 export const unstable_settings = {
   anchor: "welcome",
@@ -7,9 +8,12 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
+    
     <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-    </Stack>
+      <UserProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+        </Stack>
+      </UserProvider>
     </SafeAreaProvider>
   );
 }

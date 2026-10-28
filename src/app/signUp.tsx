@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
 import { useState } from 'react';
 import { Checkbox } from 'expo-checkbox';
-import DateTimePicker, {DateTimePickerAndroid } from "@react-native-community/datetimepicker"
+import DateTimePicker, {DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { useUser } from "../app/context/UserContext";
 
 // Component for the SignUp screen
 export default function SignUp() {
@@ -13,6 +14,10 @@ export default function SignUp() {
     const [checkedRememberMe, setCheckedRememberMe] = useState(false);
     const [checkedTermsConditions, setCheckedTermsConditions] = useState(false);
     const [dateOfBirth, setDateOfBirth] = useState(new Date());
+    const { accountUserName, setAccountUserName } = useUser() as unknown as {
+        accountUserName: string;
+        setAccountUserName: (value: string) => void;
+    };
 
     const openAndroidDatePicker = () => {
         DateTimePickerAndroid.open({
@@ -30,9 +35,10 @@ export default function SignUp() {
         // Main container for the signup screen
         <View style={styles.container}>
             <AccountHeader AccountHeaderText="Cardfolio"></AccountHeader>
-            <View style={styles.forms}>
+            <ScrollView style={styles.forms}>
                 <AccountForm AccountFormText="Full Name" />
                 <AccountForm AccountFormText="Email Address" />
+                <AccountForm AccountFormText="Username" AccountInformation={accountUserName} onChangeText={setAccountUserName}/>
                 <AccountForm AccountFormText="Password" />
                 <View style={styles.dateForm}>
                     <Text style={Platform.OS === 'android' ? styles.formTitleAndroid : styles.formTitle}>Age</Text>
@@ -54,7 +60,7 @@ export default function SignUp() {
                         />
                         )}
                 </View>
-            </View>
+            </ScrollView>
             <View>
                 <View style={styles.checkBoxRow}>
                     <View style={styles.rememberMeTermsConditionsForgotPassword}>

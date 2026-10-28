@@ -14,6 +14,7 @@ import CardBox from "../../components/CardBox";
 import CollectionSearchBar from "../../components/CollectionSearchBar";
 import { useRouter } from "expo-router";
 import { lorcanaCardImages, pokemonCardImages, riftboundCardImages } from "../../constants/CardImages";
+import { useUser } from "../context/UserContext";
 
 {
   /*
@@ -38,6 +39,9 @@ import { lorcanaCardImages, pokemonCardImages, riftboundCardImages } from "../..
 
 export default function Index() {
   const router = useRouter();
+      const { accountUserName } = useUser() as unknown as {
+        accountUserName: string;
+    };
   return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -50,7 +54,7 @@ export default function Index() {
             
           </View>
           <View style={styles.headerUserName}>
-            <Text style={styles.userName}>Smeagol Reagol Rolkien Tolkien</Text>
+            <Text style={styles.userName}>{accountUserName || "No username available"}</Text>
           </View>
         <CollectionSearchBar mainSearch="Quick Search" subSearch="Game" />
         </View>
