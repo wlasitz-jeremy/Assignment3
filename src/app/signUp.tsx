@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
 import { useState } from 'react';
 import { Checkbox } from 'expo-checkbox';
-import DateTimePicker from "@react-native-community/datetimepicker"
+import DateTimePicker, {DateTimePickerAndroid } from "@react-native-community/datetimepicker"
 
 // Component for the SignUp screen
 export default function SignUp() {
@@ -13,6 +13,18 @@ export default function SignUp() {
     const [checkedRememberMe, setCheckedRememberMe] = useState(false);
     const [checkedTermsConditions, setCheckedTermsConditions] = useState(false);
     const [dateOfBirth, setDateOfBirth] = useState(new Date());
+
+    const openAndroidDatePicker = () => {
+        DateTimePickerAndroid.open({
+            value: dateOfBirth,
+            mode: 'date',
+            display: 'calendar',
+            maximumDate: new Date(),
+            onValueChange: (_event, selectedDate) => {
+                if (selectedDate) setDateOfBirth(selectedDate);
+            },
+        })
+    }
 
     return (
         // Main container for the signup screen
@@ -23,18 +35,24 @@ export default function SignUp() {
                 <AccountForm AccountFormText="Email Address" />
                 <AccountForm AccountFormText="Password" />
                 <View style={styles.dateForm}>
-                    <Text style={styles.formTitle}>Age</Text>
-                    <DateTimePicker 
-                    value={dateOfBirth ?? new Date()}
-                    mode="date"
-                    display="compact"
-                    maximumDate={new Date()}
-                    onValueChange={(event, selectedDate) => {
-                        if (selectedDate) {
-                            setDateOfBirth(selectedDate);
-                        }
-                    }}
-                    />
+                    <Text style={Platform.OS === 'android' ? styles.formTitleAndroid : styles.formTitle}>Age</Text>
+                    {Platform.OS === 'android' ? (
+                        <Pressable onPress={openAndroidDatePicker}>
+                            <View style={styles.datePicker}>
+                                <Text>{dateOfBirth.toLocaleDateString()}</Text>
+                            </View>
+                        </Pressable>
+                    ) : (
+                        <DateTimePicker
+                            value={dateOfBirth}
+                            mode="date"
+                            display="compact"
+                            maximumDate={new Date()}
+                            onValueChange={(_event, selectedDate) => {
+                                if (selectedDate) setDateOfBirth(selectedDate);
+                            }}
+                        />
+                        )}
                 </View>
             </View>
             <View>
@@ -118,5 +136,15 @@ const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: "bold",
       marginRight: "15%",
+    },
+    datePicker: {
+        backgroundColor: "lightgrey",
+        borderRadius: 20,
+        padding: 10,
+    },
+    formTitleAndroid: {
+      fontSize: 30,
+      fontWeight: "bold",
+      marginRight: "20%",
     },
 });
