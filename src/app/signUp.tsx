@@ -36,29 +36,31 @@ export default function SignUp() {
         <View style={styles.container}>
             <AccountHeader AccountHeaderText="Cardfolio"></AccountHeader>
             <ScrollView style={styles.forms}>
-                <AccountForm AccountFormText="Full Name" />
-                <AccountForm AccountFormText="Email Address" />
-                <AccountForm AccountFormText="Username" AccountInformation={accountUserName} onChangeText={setAccountUserName}/>
-                <AccountForm AccountFormText="Password" />
-                <View style={styles.dateForm}>
-                    <Text style={Platform.OS === 'android' ? styles.formTitleAndroid : styles.formTitle}>Age</Text>
-                    {Platform.OS === 'android' ? (
-                        <Pressable onPress={openAndroidDatePicker}>
-                            <View style={styles.datePicker}>
-                                <Text>{dateOfBirth.toLocaleDateString()}</Text>
-                            </View>
-                        </Pressable>
-                    ) : (
-                        <DateTimePicker
-                            value={dateOfBirth}
-                            mode="date"
-                            display="compact"
-                            maximumDate={new Date()}
-                            onValueChange={(_event, selectedDate) => {
-                                if (selectedDate) setDateOfBirth(selectedDate);
-                            }}
-                        />
-                        )}
+                <View style={styles.forms}>
+                    <AccountForm AccountFormText="Full Name" />
+                    <AccountForm AccountFormText="Email Address" />
+                    <AccountForm AccountFormText="Username" AccountInformation={accountUserName} onChangeText={setAccountUserName}/>
+                    <AccountForm AccountFormText="Password" />
+                    <View style={styles.dateForm}>
+                        <Text style={Platform.OS === 'android' ? styles.formTitleAndroid : styles.formTitle}>Age</Text>
+                        {Platform.OS === 'android' ? (
+                            <Pressable onPress={openAndroidDatePicker}>
+                                <View style={styles.datePicker}>
+                                    <Text>{dateOfBirth.toLocaleDateString()}</Text>
+                                </View>
+                            </Pressable>
+                        ) : (
+                            <DateTimePicker
+                                value={dateOfBirth}
+                                mode="date"
+                                display="compact"
+                                maximumDate={new Date()}
+                                onValueChange={(_event, selectedDate) => {
+                                    if (selectedDate) setDateOfBirth(selectedDate);
+                                }}
+                            />
+                            )}
+                    </View>
                 </View>
             </ScrollView>
             <View>
