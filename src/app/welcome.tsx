@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
+import AccountHeader from '../components/AccountHeader';
 
 // Component for the welcome screen
 export default function Welcome() {
@@ -8,20 +9,15 @@ export default function Welcome() {
     return (
         // Main container for the welcome screen
         <View style={styles.container}>
-            <View style={styles.header}>
-                {/* Title of the welcome screen */}
-                <Text style={styles.title}>
-                    Welcome to Cardfolio
-                </Text>    
-            </View>
+            <AccountHeader AccountHeaderText="Welcome to Cardfolio"/>
             {/* Log In button */}
-            <Pressable onPress={() => router.replace('/')}>
+            <Pressable onPress={() => router.replace('/logIn')}>
                 <View style={styles.loginButton}>
                     <Text style={styles.loginButtonText}>Log In</Text>
                 </View>
             </Pressable>
             {/* Sign Up button */}
-            <Pressable onPress={() => router.replace('/')}>
+            <Pressable onPress={() => router.replace('/signUp')}>
                 <View style={styles.signupButton}>
                     <Text style={styles.signupButtonText}>Sign Up</Text>
                 </View>
@@ -36,17 +32,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginVertical: 100,
-    },
-    header: {
-        backgroundColor: '#f0f0f0',
-        padding: 20,
-        borderRadius: 10,
-    },
-    title: {
-        fontSize: 48,
-        fontWeight: 'bold',
-        textAlign: 'center',
     },
     loginButtonText: {
         color: '#ffffff',
@@ -77,5 +62,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: 80,
         width: 280,
+        marginBottom: 100,
     },
 });
