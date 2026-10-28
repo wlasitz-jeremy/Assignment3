@@ -4,6 +4,7 @@ import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
 import { useState } from 'react';
 import { Checkbox } from 'expo-checkbox';
+import DateTimePicker from "@react-native-community/datetimepicker"
 
 // Component for the SignUp screen
 export default function SignUp() {
@@ -11,6 +12,8 @@ export default function SignUp() {
     const router = useRouter();
     const [checkedRememberMe, setCheckedRememberMe] = useState(false);
     const [checkedTermsConditions, setCheckedTermsConditions] = useState(false);
+    const [dateOfBirth, setDateOfBirth] = useState(new Date());
+
     return (
         // Main container for the signup screen
         <View style={styles.container}>
@@ -19,6 +22,20 @@ export default function SignUp() {
                 <AccountForm AccountFormText="Full Name" />
                 <AccountForm AccountFormText="Email Address" />
                 <AccountForm AccountFormText="Password" />
+                <View style={styles.dateForm}>
+                    <Text style={styles.formTitle}>Age</Text>
+                    <DateTimePicker 
+                    value={dateOfBirth ?? new Date()}
+                    mode="date"
+                    display="compact"
+                    maximumDate={new Date()}
+                    onChange={(event, selectedDate) => {
+                        if (selectedDate) {
+                            setDateOfBirth(selectedDate);
+                        }
+                    }}
+                    />
+                </View>
             </View>
             <View>
                 <View style={styles.checkBoxRow}>
@@ -54,16 +71,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    header: {
-        backgroundColor: '#f0f0f0',
-        padding: 20,
-        borderRadius: 10,
-    },
-    title: {
-        fontSize: 48,
-        fontWeight: 'bold',
-        textAlign: 'center',
     },
     signupButtonText: {
         color: '#4a475c',
@@ -101,5 +108,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 2,
         alignItems: "center",
+    },
+    dateForm: {
+      flexDirection: "row",
+      width: "80%",
+      marginLeft: "10%",
+    },
+    formTitle: {
+      fontSize: 30,
+      fontWeight: "bold",
+      marginRight: "15%",
     },
 });

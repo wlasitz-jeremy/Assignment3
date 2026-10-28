@@ -52,16 +52,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: 'center',
     },
-    header: {
-        backgroundColor: '#f0f0f0',
-        padding: 20,
-        borderRadius: 10,
-    },
-    title: {
-        fontSize: 48,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
     loginButtonText: {
         color: '#ffffff',
         fontSize: 30,
