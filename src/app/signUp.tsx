@@ -19,13 +19,13 @@ export default function SignUp() {
     const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
     
     const {
+        setAccountUserName,
         setRegisteredUserName,
         setRegisteredPassword,
         setRegisteredFullName,
         setRegisteredEmail,
         setDateOfBirth: saveDateOfBirth,
     } = useUser();
-
     const { control, 
         handleSubmit, 
         setValue,
@@ -42,6 +42,7 @@ export default function SignUp() {
         mode: "onSubmit",
     })
     const onSubmit = (data: RegistrationForm) => {
+        setAccountUserName(data.userName);
         setRegisteredUserName(data.userName);
         setRegisteredPassword(data.passWord);
         setRegisteredFullName(data.fullName);
@@ -142,11 +143,12 @@ export default function SignUp() {
                         </Text>
                     )}
                     </View>
-                    <View style={styles.dateForm}>
-                        <Text style={Platform.OS === "android" ? styles.formTitleAndroid : styles.formTitle}>
-                            Date of Birth
-                        </Text>
-                        {Platform.OS === "android" ? (
+                    <View style={styles.dateSection}>
+                        <View style={styles.dateForm}>
+                            <Text style={Platform.OS === "android" ? styles.formTitleAndroid : styles.formTitle}>
+                                Date of Birth
+                            </Text>
+                            {Platform.OS === "android" ? (
                             <Pressable onPress={openAndroidDatePicker}>
                                 <View style={styles.datePicker}>
                                     <Text>
@@ -154,7 +156,7 @@ export default function SignUp() {
                                     </Text>
                                 </View>
                             </Pressable>
-                        ) : (
+                            ) : (
                             <DateTimePicker
                                 value={dateOfBirth ?? new Date()}
                                 mode="date"
@@ -163,13 +165,16 @@ export default function SignUp() {
                                 onValueChange={(_event, selectedDate) => {
                                     if (selectedDate) {
                                         setDateOfBirth(selectedDate);
-                                    setValue("dateOfBirth", selectedDate, { shouldValidate: true });
+                                        setValue("dateOfBirth", selectedDate, { shouldValidate: true });
                                     }
                                 }}
                             />
-                        )}
-                        {errors.dateOfBirth && (
-                            <Text style={{ color: "red" }}>{errors.dateOfBirth.message}</Text>
+                            )}
+                        </View>
+                        {errors.dateOfBirth?.message && (
+                            <Text style={{ color: "red", marginTop: 4 }}>
+                            {errors.dateOfBirth.message}
+                            </Text>
                         )}
                     </View>
                 </View>
@@ -248,13 +253,10 @@ const styles = StyleSheet.create({
     },
     dateForm: {
       flexDirection: "row",
-      width: "80%",
-      marginLeft: "10%",
     },
     formTitle: {
       fontSize: 30,
       fontWeight: "bold",
-      marginRight: "15%",
     },
     datePicker: {
         backgroundColor: "lightgrey",
@@ -264,6 +266,9 @@ const styles = StyleSheet.create({
     formTitleAndroid: {
       fontSize: 30,
       fontWeight: "bold",
-      marginRight: "20%",
     },
+    dateSection: {
+      width: "80%",
+      marginLeft: "10%",
+},
 });
