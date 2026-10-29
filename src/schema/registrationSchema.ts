@@ -28,7 +28,10 @@ export const registrationSchema = z.object({
 
     passWord: z
         .string()
-        .min(8, "Password must be at least 8 characters."),
+        .min(8, "Password must be at least 8 characters.")
+        .regex(/[A-Z]/g, "Password mustr contain atleast one uppercase letter.")
+        .regex(/\D/g, "Password must contain atleast one number.")
+        .regex(/[!@#$%^&*]/, "Password must contain atleast one special charater."),
 
     dateOfBirth: z
         .date()
