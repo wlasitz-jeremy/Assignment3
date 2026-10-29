@@ -68,8 +68,9 @@ export default function CardBox({ cards, game, CardBoxText }: Props) {
 // Styles for the CardBox component
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: "80%",
     alignSelf: "center",
+    alignItems: "center",
   },
   scrollView: {
     flexDirection: "row",
