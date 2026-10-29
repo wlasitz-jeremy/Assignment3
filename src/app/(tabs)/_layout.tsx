@@ -71,7 +71,6 @@ export default function TabBarLayout() {
           ),
         }}
       />
-      <Tabs.Screen name="shop" options={{ href: null }} />
     </Tabs>
   );
 }

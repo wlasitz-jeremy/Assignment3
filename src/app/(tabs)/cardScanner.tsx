@@ -54,7 +54,7 @@ export default function CardScanner() {
         </Pressable>
       </View>
       <View style={ styles.cameraContainer }>
-        {/* <CardScannerCamera /> */}
+        <CardScannerCamera />
       </View>
       <View style={{ flex: 1 }}></View>
       <View style={ styles.controls }>

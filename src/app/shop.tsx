@@ -1,8 +1,8 @@
 import { View, Image, StyleSheet, Pressable, Text, ScrollView } from "react-native";
-import CardBox from "../../components/CardBox";
-import HamburgerMenu from "../../components/HamburgerMenu";
-import StoreSearchBar from "../../components/StoreSearchBar";
-import LocationPin from "../../components/LocationPin";
+import CardBox from "../components/CardBox";
+import HamburgerMenu from "../components/HamburgerMenu";
+import StoreSearchBar from "../components/StoreSearchBar";
+import LocationPin from "../components/LocationPin";
 import { AntDesign } from "@expo/vector-icons";
 // Import the Cards from the collections
 import {
@@ -11,11 +11,14 @@ import {
   pokemonCardImages,
   riftboundCardImages,
   yugiohCardImages,
-} from "../../constants/CardImages";
+} from "../constants/CardImages";
+import NavigationBar from "../components/NavigationBar";
+import { useRouter } from "expo-router";
 // Initialize the Background image for the Main Menu
-const iconImage = require("../../../assets/menuIcons/Icon.png");
+const iconImage = require("../../assets/menuIcons/Icon.png");
 
 export default function shopPage() {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       {/* Top NavBar */}
@@ -23,7 +26,9 @@ export default function shopPage() {
         <HamburgerMenu />
         <Image source={iconImage} style={styles.image}></Image>
         <AntDesign name="shopping-cart" size={60} />
-        <LocationPin />
+        <Pressable onPress={() => router.push("/shopLocation")}>
+          <LocationPin />
+        </Pressable>
       </View>
 
       {/* Search Box */}
@@ -119,6 +124,9 @@ export default function shopPage() {
         />
       </View>
       </ScrollView>
+        <View style={styles.footer}>    
+          <NavigationBar />
+        </View >
     </View>
   );
 }
@@ -175,5 +183,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "black",
     textAlign: "center",
+  },
+  footer:{
+    alignItems: 'center',
+    bottom: 0,
+    width: "100%",
+    justifyContent: 'flex-end',
+    paddingBottom: 15,
+    paddingTop: 35,
+    zIndex: 1,
   },
 });
