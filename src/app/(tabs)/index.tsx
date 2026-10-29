@@ -14,7 +14,7 @@ import CardBox from "../../components/CardBox";
 import CollectionSearchBar from "../../components/CollectionSearchBar";
 import { useRouter } from "expo-router";
 import { lorcanaCardImages, pokemonCardImages, riftboundCardImages } from "../../constants/CardImages";
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/UserContext";
 
 {
   /*

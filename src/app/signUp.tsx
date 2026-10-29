@@ -5,10 +5,10 @@ import AccountForm from '../components/AccountForm';
 import { useState } from 'react';
 import { Checkbox } from 'expo-checkbox';
 import DateTimePicker, {DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import { useUser } from "../app/context/UserContext";
+import { useUser } from "../context/UserContext";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { RegistrationForm, RegistrationFormInput, registrationSchema } from './schema/registrationSchema';
+import { RegistrationForm, RegistrationFormInput, registrationSchema } from '../schema/registrationSchema';
 
 // Component for the SignUp screen
 export default function SignUp() {

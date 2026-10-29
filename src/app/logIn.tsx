@@ -4,10 +4,10 @@ import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
 import { Checkbox } from 'expo-checkbox';
 import { useState } from 'react';
-import { useUser } from "../app/context/UserContext";
+import { useUser } from "../context/UserContext";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { AuthenticationForm, authenticationSchema } from './schema/authenticationSchema';
+import { AuthenticationForm, authenticationSchema } from '../schema/authenticationSchema';
 
 // Component for the LogIn screen
 export default function LogIn() {
