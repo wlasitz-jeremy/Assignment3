@@ -270,5 +270,5 @@ const styles = StyleSheet.create({
     dateSection: {
       width: "80%",
       marginLeft: "10%",
-},
+    },
 });
