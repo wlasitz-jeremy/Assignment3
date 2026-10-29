@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 export default function TabBarLayout() {
   return (
     <Tabs
+    backBehavior="history"
       screenOptions={{
         headerShown: false,
         tabBarStyle: {

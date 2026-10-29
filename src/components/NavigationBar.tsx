@@ -13,7 +13,7 @@ export default function NavigationBar() {
         <Ionicons name="home-outline" size={24} color="black" />
       </Pressable>
 
-      <Pressable key="cardScanner" onPress={() => { router.replace("/cardScanner")}}>
+      <Pressable key="cardScanner" onPress={() => { router.push("/cardScanner")}}>
         <Ionicons name={pathname === "/cardScanner" ? "camera" : "camera-outline"} size={24} color="black" />
       </Pressable>
 
