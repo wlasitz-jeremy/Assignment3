@@ -19,6 +19,22 @@ export const registrationSchema = z.object({
     passWord: z
         .string()
         .min(8, "Password must be at least 8 characters."),
+
+    dateOfBirth: z
+        .date()
+        .nullable()
+        .refine((date) => date !== null, "Please select your date of birth.",)
+        .refine((date) => {
+            if (date === null) return true;
+                const today = new Date();
+                const eighteenthBirthdayCutoff = new Date(
+                    today.getFullYear() - 18,
+                    today.getMonth(),
+                    today.getDate(),
+                ); 
+            return date <= eighteenthBirthdayCutoff;
+        }, "You must be at least 18 years old.",),
 });
 
-export type RegistrationForm = z.infer<typeof registrationSchema>;
+export type RegistrationFormInput = z.input<typeof registrationSchema>;
+export type RegistrationForm = z.output<typeof registrationSchema>;

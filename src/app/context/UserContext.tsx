@@ -11,6 +11,8 @@ type UserValue = {
   setRegisteredFullName: Dispatch<SetStateAction<string>>;
   registeredEmail: string;
   setRegisteredEmail: Dispatch<SetStateAction<string>>;
+  dateOfBirth: Date | null;
+  setDateOfBirth: Dispatch<SetStateAction<Date | null>>;
 };
 
 const UserContext = createContext<UserValue>({
@@ -24,6 +26,8 @@ const UserContext = createContext<UserValue>({
   setRegisteredFullName: () => {},
   registeredEmail: "",
   setRegisteredEmail: () => {},
+  dateOfBirth: null,
+  setDateOfBirth: () => {},
 });
 
 interface UserProviderProps {
@@ -36,6 +40,7 @@ export function UserProvider({ children }: UserProviderProps) {
     const [registeredPassword, setRegisteredPassword] = useState("");
     const [registeredFullName, setRegisteredFullName] = useState("");
     const [registeredEmail, setRegisteredEmail] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
     return (
         <UserContext.Provider
             value={{
@@ -49,6 +54,8 @@ export function UserProvider({ children }: UserProviderProps) {
                 setRegisteredFullName,
                 registeredEmail,
                 setRegisteredEmail,
+                dateOfBirth,
+                setDateOfBirth,
             }}
         >
             {children}   
