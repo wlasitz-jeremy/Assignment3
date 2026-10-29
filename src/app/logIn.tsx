@@ -1,27 +1,86 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import AccountHeader from '../components/AccountHeader';
 import AccountForm from '../components/AccountForm';
 import { Checkbox } from 'expo-checkbox';
 import { useState } from 'react';
 import { useUser } from "../app/context/UserContext";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { AuthenticationForm, authenticationSchema } from './schema/authenticationSchema';
 
 // Component for the LogIn screen
 export default function LogIn() {
     // Initialize the router for navigation
     const router = useRouter();
     const [checkedRememberMe, setCheckedRememberMe] = useState(false);
-    const { accountUserName, setAccountUserName } = useUser() as unknown as {
-        accountUserName: string;
-        setAccountUserName: (value: string) => void;
-    };
+    const { registeredUserName, registeredPassword, setAccountUserName } = useUser();
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<AuthenticationForm>({
+        resolver: zodResolver(authenticationSchema),
+        defaultValues: {
+            userName: "",
+            passWord: "",
+        },
+        mode: "onSubmit",
+    });
+
+const onSubmit = (data: AuthenticationForm) => {
+  if (
+    data.userName === registeredUserName &&
+    data.passWord === registeredPassword
+  ) {
+    setAccountUserName(data.userName);
+    router.replace("/");
+  } else {
+    Alert.alert("Login failed", "Username or password is incorrect.");
+  }
+};
+
     return (
         // Main container for the welcome screen
         <View style={styles.container}>
             <AccountHeader AccountHeaderText="Cardfolio"></AccountHeader>
             <View style={styles.forms}>
-                <AccountForm AccountFormText="Username" AccountInformation={accountUserName} onChangeText={setAccountUserName}/>
-                <AccountForm AccountFormText="Password" />
+                <View>
+                    <Controller
+                        control={control}
+                        name="userName"
+                        render={({ field: { onChange, value } }) => (
+                            <AccountForm
+                                AccountFormText="Username"
+                                AccountInformation={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                    />
+                    {errors.userName && (
+                    <Text style={{ color: "red", marginLeft: "10%" }}>
+                        {errors.userName.message}
+                    </Text>
+                    )}
+                </View>
+                <View>
+                    <Controller
+                        control={control}
+                        name="passWord"
+                        render={({ field: { onChange, value } }) => (
+                            <AccountForm
+                                AccountFormText="Password"
+                                AccountInformation={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                    />
+                    {errors.passWord && (
+                    <Text style={{ color: "red", marginLeft: "10%" }}>
+                        {errors.passWord.message}
+                    </Text>
+                    )}
+                </View>
             </View>
             <View>
                 <View style={styles.checkBoxRow}>
@@ -34,7 +93,7 @@ export default function LogIn() {
                     </View>
                 </View>
                 {/* Log In button */}
-                <Pressable onPress={() => router.replace('/')}>
+                <Pressable onPress={() => void handleSubmit(onSubmit)()}>
                     <View style={styles.loginButton}>
                         <Text style={styles.loginButtonText}>LOGIN</Text>
                     </View>
