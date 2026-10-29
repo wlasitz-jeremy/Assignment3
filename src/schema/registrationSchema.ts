@@ -1,7 +1,12 @@
 import { z } from "zod";
 
 export const registrationSchema = z.object({
-    fullName: z
+    firstName: z
+        .string()
+        .trim()
+        .min(2, "Enter at least 2 characters."),
+
+    lastName: z
         .string()
         .trim()
         .min(2, "Enter at least 2 characters."),
@@ -10,6 +15,11 @@ export const registrationSchema = z.object({
         .string()
         .trim()
         .email("Enter a valid email address."),
+
+    phoneNumber: z
+        .string()
+        .max(14, "Maximuim 14 characters allowed.")
+        .refine((val) => val.replace(/\D/g, "").length >= 10, "Must have atleast 10 digits."),
     
     userName: z
         .string()

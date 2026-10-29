@@ -20,9 +20,13 @@ export default function SignUp() {
     
     const {
         setAccountUserName,
+        setAccountPhoneNumber,
+        setAccountEmail,
         setRegisteredUserName,
         setRegisteredPassword,
-        setRegisteredFullName,
+        setRegisteredFirstName,
+        setRegisteredLastName,
+        setRegisteredPhoneNumber,
         setRegisteredEmail,
         setDateOfBirth: saveDateOfBirth,
     } = useUser();
@@ -33,19 +37,25 @@ export default function SignUp() {
     } = useForm<RegistrationFormInput, any, RegistrationForm>({
         resolver: zodResolver(registrationSchema),
         defaultValues: {
-            fullName: "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
             email: "",
             userName: "",
             passWord: "",
             dateOfBirth: null,
         },
-        mode: "onSubmit",
+        mode: "onBlur",
     })
     const onSubmit = (data: RegistrationForm) => {
         setAccountUserName(data.userName);
         setRegisteredUserName(data.userName);
         setRegisteredPassword(data.passWord);
-        setRegisteredFullName(data.fullName);
+        setRegisteredFirstName(data.firstName);
+        setRegisteredLastName(data.lastName);
+        setAccountPhoneNumber(data.phoneNumber);
+        setRegisteredPhoneNumber(data.phoneNumber);
+        setAccountEmail(data.email);
         setRegisteredEmail(data.email);
         saveDateOfBirth(dateOfBirth);
         router.replace("/");
@@ -74,18 +84,54 @@ export default function SignUp() {
                     <View>
                     <Controller 
                         control={control}
-                        name='fullName'
+                        name='firstName'
                         render={({ field: { onChange, value } }) => (
                             <AccountForm 
-                                AccountFormText="Full Name" 
+                                AccountFormText="First Name" 
                                 AccountInformation={value}
                                 onChangeText={onChange}
                             />
                         )}
                     />
-                    {errors.fullName && (
+                    {errors.firstName && (
                         <Text style={{color: "red", marginLeft: "10%"}}>
-                            {errors.fullName.message}
+                            {errors.firstName.message}
+                        </Text>
+                    )}
+                    </View>
+                    <View>
+                    <Controller 
+                        control={control}
+                        name='lastName'
+                        render={({ field: { onChange, value } }) => (
+                            <AccountForm 
+                                AccountFormText="Last Name" 
+                                AccountInformation={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                    />
+                    {errors.lastName && (
+                        <Text style={{color: "red", marginLeft: "10%"}}>
+                            {errors.lastName.message}
+                        </Text>
+                    )}
+                    </View>
+                    <View>
+                    <Controller 
+                        control={control}
+                        name='phoneNumber'
+                        render={({ field: { onChange, value } }) => (
+                            <AccountForm 
+                                AccountFormText="Phone Number" 
+                                AccountInformation={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                    />
+                    {errors.phoneNumber && (
+                        <Text style={{color: "red", marginLeft: "10%"}}>
+                            {errors.phoneNumber.message}
                         </Text>
                     )}
                     </View>

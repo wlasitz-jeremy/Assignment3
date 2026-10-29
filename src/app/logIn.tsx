@@ -25,7 +25,7 @@ export default function LogIn() {
             userName: "",
             passWord: "",
         },
-        mode: "onSubmit",
+        mode: "onBlur",
     });
 
 const onSubmit = (data: AuthenticationForm) => {
