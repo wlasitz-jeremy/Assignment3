@@ -1,5 +1,14 @@
 import { createContext, useContext, useState, Dispatch, SetStateAction } from "react";
 
+/*
+The UserContext provides the application with shared information about the user so that any component can parse or update without needing to change them manually.
+
+-Account Fields such as the username, phone number, email, hold these pieces of information of the user that is currently logged in.
+-Registered Fields such as the username, password, names and other fields that were entered during the sign up page are held information during that stage.
+-Date of birth is held by the date that the use selects during the registration page. 
+-Each value is paired with a setter to allow the component to be able to update it.
+*/
+
 type UserValue = {
   accountUserName: string;
   setAccountUserName: Dispatch<SetStateAction<string>>;
