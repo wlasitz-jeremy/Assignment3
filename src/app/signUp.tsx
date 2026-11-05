@@ -10,6 +10,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { RegistrationForm, RegistrationFormInput, registrationSchema } from '../schema/registrationSchema';
 
+/*
+SignUp screen allows the user to create an account by filling out the registration form details.
+
+-Form fields include first name, last name, phone number, email, username, password, and date of birth.
+-Each field is validated through the RegistrationSchema that requires the user to adhere to some specifications during the signup, while an error message will appear if the user does not meet the field requirments.
+-When the form is completed, the user can click on "Create Account" and the information placed in the registrrtaion form will be saved to the UserContext.
+-Users with existing accounts can go straight to the log in page from the signup page using the link at the bottom.
+*/
+
 // Component for the SignUp screen
 export default function SignUp() {
     // Initialize the router for navigation
