@@ -33,6 +33,8 @@ export default function LogIn() {
   });
   // Constant for authentication
   const onSubmit = (data: AuthenticationForm) => {
+    // Uses an if statement to determine if the username and password is correct
+    // if not it will return an error message
     if (
       data.userName === registeredUserName &&
       data.passWord === registeredPassword
@@ -50,6 +52,7 @@ export default function LogIn() {
       <AccountHeader AccountHeaderText="Cardfolio"></AccountHeader>
       <View style={styles.forms}>
         <View>
+          {/*Controller where the user inputs their username*/}
           <Controller
             control={control}
             name="userName"
@@ -61,6 +64,7 @@ export default function LogIn() {
               />
             )}
           />
+          {/* will display incorrect username here */}
           {errors.userName && (
             <Text style={{ color: "red", marginLeft: "10%" }}>
               {errors.userName.message}
@@ -68,6 +72,7 @@ export default function LogIn() {
           )}
         </View>
         <View>
+          {/*Conroller for password*/}
           <Controller
             control={control}
             name="passWord"
@@ -79,6 +84,7 @@ export default function LogIn() {
               />
             )}
           />
+          {/*Incorrect handle for password*/}
           {errors.passWord && (
             <Text style={{ color: "red", marginLeft: "10%" }}>
               {errors.passWord.message}
