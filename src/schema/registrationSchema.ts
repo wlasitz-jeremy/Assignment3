@@ -1,5 +1,15 @@
 import { z } from "zod";
+/* 
+Registration Scheme provides the user with registrations restrictions. If user do not meet required for select fields, a message with return to the user on what they are missing.
 
+-First Name much contain a length of at least 2 Characters.
+-Last Name much contain a length of at least 2 Characters.
+-Email much be a valid email addrress.
+-Phone Number must be entered in a valid format and must contain exactly 10 digits
+-Usename much contain a length of at least 3 Characters.
+-Date of birth must be a valid and user must be over the age of 18 to register on the application. If user is not of age, user will be -unable to create an account and will be given message that they are required to be over the age of 18.
+
+*/
 export const registrationSchema = z.object({
     firstName: z
         .string()
